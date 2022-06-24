@@ -1,10 +1,23 @@
-@import-normalize; /* bring in normalize.css styles */
+@import-normalize;
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+  --header-bg-color: #3e3e3e;
+  --footer-bg-color: #3e3e3e;
+  --container-bg-color: #3e3e3e;
+  --theme-color: #eab71d;
+  --theme-color-hover: #fcd11f;
+  --input-text-color: #ddd;
+  --input-secondary-color: #666;
+}
 
 body {
+  color: #fff;
+  background: linear-gradient(to right, #eab71d 0%, #ead21d 100%);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -12,4 +25,31 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
 }
