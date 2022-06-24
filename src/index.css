@@ -3,12 +3,12 @@
 
 :root {
   --header-bg-color: #3e3e3e;
-  --footer-bg-color: #3e3e3e;
   --container-bg-color: #3e3e3e;
   --theme-color: #eab71d;
   --theme-color-hover: #fcd11f;
   --input-text-color: #ddd;
   --input-secondary-color: #666;
+  --error-message-color: #ff0033;
 }
 
 body {

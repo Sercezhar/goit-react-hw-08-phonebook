@@ -10,7 +10,6 @@ export function AuthNav() {
           isActive ? styles.ActiveLink : styles.Link
         }
         to="/login"
-        exact
       >
         <BiLogIn size={24} /> Log In
       </NavLink>
@@ -19,7 +18,6 @@ export function AuthNav() {
           isActive ? styles.ActiveLink : styles.Link
         }
         to="/register"
-        exact
       >
         <BiUserPlus size={24} /> Register
       </NavLink>

@@ -16,7 +16,7 @@
 .Input {
   margin-top: 3px;
   padding: 8px 0px;
-  width: 300px;
+  width: 350px;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 1.4px;
@@ -27,6 +27,10 @@
   background: none;
   border: none;
   border-bottom: 1px solid var(--input-secondary-color);
+}
+
+.Input:focus {
+  border-color: var(--theme-color);
 }
 
 .Input::placeholder {
