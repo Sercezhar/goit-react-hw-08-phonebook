@@ -4,7 +4,11 @@ import { Section } from 'components/Section';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { registerUser } from 'redux/auth/authOperations';
+import formStyles from 'components/ContactForm/ContactForm.module.css';
 import styles from './RegisterPage.module.css';
+
+import { useDispatch } from 'react-redux';
 
 const registerSchema = yup.object().shape({
   name: yup.string().required().max(16),
@@ -13,28 +17,39 @@ const registerSchema = yup.object().shape({
 });
 
 export function RegisterPage() {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = async data => {
+    try {
+      await dispatch(registerUser(data));
+    } catch (error) {
+      console.log(error);
+    }
+
+    reset();
+  };
 
   return (
     <Container>
       <SectionsWrapper>
         <Section tag={'h1'} title={'Registration'}>
           <form
-            className={styles.Form}
+            className={formStyles.Form}
             onSubmit={handleSubmit(onSubmit)}
             autoComplete="off"
           >
             <label className={styles.Label}>
               <input
-                className={styles.Input}
+                className={formStyles.Input}
                 {...register('name')}
                 type="text"
                 placeholder="name"
@@ -46,7 +61,7 @@ export function RegisterPage() {
 
             <label className={styles.Label}>
               <input
-                className={styles.Input}
+                className={formStyles.Input}
                 {...register('email')}
                 type="email"
                 placeholder="email"
@@ -58,7 +73,7 @@ export function RegisterPage() {
 
             <label className={styles.Label}>
               <input
-                className={styles.Input}
+                className={formStyles.Input}
                 {...register('password')}
                 type="password"
                 placeholder="password"
@@ -68,7 +83,7 @@ export function RegisterPage() {
               )}
             </label>
 
-            <button className={styles.SubmitBtn} type="submit">
+            <button className={formStyles.SubmitBtn} type="submit">
               Register
             </button>
           </form>

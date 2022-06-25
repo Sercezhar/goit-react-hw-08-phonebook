@@ -21,8 +21,8 @@ export function ContactList() {
     <>
       {contacts && (
         <ul>
-          {filteredContacts.map(({ id, name, phone }) => (
-            <ContactListItem key={id} id={id} name={name} number={phone} />
+          {filteredContacts.map(({ id, name, number }) => (
+            <ContactListItem key={id} id={id} name={name} number={number} />
           ))}
         </ul>
       )}

@@ -1,39 +1,78 @@
 import { Container } from 'components/Container';
 import { SectionsWrapper } from 'components/SectionsWrapper';
 import { Section } from 'components/Section';
-import styles from 'components/ContactForm/ContactForm.module.css';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { logInUser } from 'redux/auth/authOperations';
+import formStyles from 'components/ContactForm/ContactForm.module.css';
+import styles from './LoginPage.module.css';
+
+import { useDispatch } from 'react-redux';
+
+const registerSchema = yup.object().shape({
+  email: yup.string().email().required('Enter your email to log in'),
+  password: yup.string().required('Enter your password to log in').min(8),
+});
 
 export function LoginPage() {
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(registerSchema),
+  });
+
+  const onSubmit = async data => {
+    try {
+      await dispatch(logInUser(data));
+    } catch (error) {
+      console.log(error);
+    }
+
+    reset();
+  };
+
   return (
     <Container>
       <SectionsWrapper>
         <Section tag={'h1'} title={'Log In'}>
-          <form className={styles.Form} autoComplete="off">
-            <label className={styles.Label}>
+          <form
+            className={formStyles.Form}
+            onSubmit={handleSubmit(onSubmit)}
+            autoComplete="off"
+          >
+            <label className={formStyles.Label}>
               <input
-                className={styles.Input}
+                className={formStyles.Input}
+                {...register('email')}
                 type="email"
-                name="email"
                 placeholder="email"
               />
+              {errors.email && (
+                <p className={styles.ErrorMessage}>{errors.email.message}</p>
+              )}
             </label>
-            <label className={styles.Label}>
+
+            <label className={formStyles.Label}>
               <input
-                className={styles.Input}
+                className={formStyles.Input}
+                {...register('password')}
                 type="password"
-                name="password"
                 placeholder="password"
               />
+              {errors.password && (
+                <p className={styles.ErrorMessage}>{errors.password.message}</p>
+              )}
             </label>
-            <button className={styles.SubmitBtn} type="submit">
+
+            <button className={formStyles.SubmitBtn} type="submit">
               Log In
             </button>
-            {/* <span className={styles.Redirect}>
-            Not registered?{' '}
-            <NavLink className={styles.Register} to="/register">
-              Create an account
-            </NavLink>
-          </span> */}
           </form>
         </Section>
       </SectionsWrapper>
