@@ -12,6 +12,7 @@ export function Navigation() {
       >
         Home
       </NavLink>
+
       <NavLink
         className={({ isActive }) =>
           isActive ? styles.ActiveLink : styles.Link

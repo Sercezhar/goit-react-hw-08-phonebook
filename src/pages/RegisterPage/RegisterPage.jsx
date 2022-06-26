@@ -1,4 +1,3 @@
-import { Container } from 'components/Container';
 import { SectionsWrapper } from 'components/SectionsWrapper';
 import { Section } from 'components/Section';
 import { useForm } from 'react-hook-form';
@@ -39,56 +38,56 @@ export function RegisterPage() {
   };
 
   return (
-    <Container>
-      <SectionsWrapper>
-        <Section tag={'h1'} title={'Registration'}>
-          <form
-            className={formStyles.Form}
-            onSubmit={handleSubmit(onSubmit)}
-            autoComplete="off"
-          >
-            <label className={styles.Label}>
-              <input
-                className={formStyles.Input}
-                {...register('name')}
-                type="text"
-                placeholder="name"
-              />
-              {errors.name && (
-                <p className={styles.ErrorMessage}>{errors.name.message}</p>
-              )}
-            </label>
+    <SectionsWrapper>
+      <Section tag={'h1'} title={'Registration'}>
+        <form
+          className={formStyles.Form}
+          onSubmit={handleSubmit(onSubmit)}
+          autoComplete="off"
+        >
+          <label className={styles.Label}>
+            <input
+              className={formStyles.Input}
+              {...register('name')}
+              type="text"
+              placeholder="name"
+            />
+            {errors.name && (
+              <p className={styles.ErrorMessage}>{errors.name.message}</p>
+            )}
+          </label>
 
-            <label className={styles.Label}>
-              <input
-                className={formStyles.Input}
-                {...register('email')}
-                type="email"
-                placeholder="email"
-              />
-              {errors.email && (
-                <p className={styles.ErrorMessage}>{errors.email.message}</p>
-              )}
-            </label>
+          <label className={styles.Label}>
+            <input
+              className={formStyles.Input}
+              {...register('email')}
+              type="email"
+              placeholder="email"
+            />
+            {errors.email && (
+              <p className={styles.ErrorMessage}>{errors.email.message}</p>
+            )}
+          </label>
 
-            <label className={styles.Label}>
-              <input
-                className={formStyles.Input}
-                {...register('password')}
-                type="password"
-                placeholder="password"
-              />
-              {errors.password && (
-                <p className={styles.ErrorMessage}>{errors.password.message}</p>
-              )}
-            </label>
+          <label className={styles.Label}>
+            <input
+              className={formStyles.Input}
+              {...register('password')}
+              type="password"
+              placeholder="password"
+            />
+            {errors.password && (
+              <p className={styles.ErrorMessage}>{errors.password.message}</p>
+            )}
+          </label>
 
-            <button className={formStyles.SubmitBtn} type="submit">
-              Register
-            </button>
-          </form>
-        </Section>
-      </SectionsWrapper>
-    </Container>
+          <button className={formStyles.SubmitBtn} type="submit">
+            Register
+          </button>
+        </form>
+      </Section>
+    </SectionsWrapper>
   );
 }
+
+export default RegisterPage;

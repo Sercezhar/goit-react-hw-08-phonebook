@@ -9,6 +9,27 @@
   --input-text-color: #ddd;
   --input-secondary-color: #666;
   --error-message-color: #ff0033;
+  --scrollbar-color: #3e3e3e;
+  --scrollbar-hover-color: #5e5e5e;
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color);
+  border: 2px solid #fff;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover-color);
 }
 
 body {

@@ -13,6 +13,7 @@ export function AuthNav() {
       >
         <BiLogIn size={24} /> Log In
       </NavLink>
+
       <NavLink
         className={({ isActive }) =>
           isActive ? styles.ActiveLink : styles.Link
