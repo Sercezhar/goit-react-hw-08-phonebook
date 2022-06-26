@@ -59,7 +59,7 @@ export function RegisterPage() {
 
           <label className={styles.Label}>
             <input
-              className={formStyles.Input}
+              className={styles.Input}
               {...register('email')}
               type="email"
               placeholder="email"
