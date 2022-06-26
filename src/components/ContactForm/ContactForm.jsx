@@ -1,85 +1,79 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { useContacts } from 'hooks/useContacts';
 import { toast } from 'react-toastify';
 import styles from './ContactForm.module.css';
 
+const registerSchema = yup.object().shape({
+  name: yup.string().required(),
+  number: yup.string().required().min(8).max(16),
+});
+
 export function ContactForm() {
   const { contacts, addContact } = useContacts();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(registerSchema),
+  });
 
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  function resetState() {
-    setName('');
-    setNumber('');
-  }
-
-  function handleInputChange(event) {
-    const { name, value } = event.currentTarget;
-
-    if (name === 'name') {
-      setName(value);
-    }
-
-    if (name === 'number') {
-      setNumber(value);
-    }
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const newContact = {
-      name,
-      number,
-    };
-
+  const onSubmit = async data => {
     const alreadyInContacts = contacts.some(
-      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
     );
 
     try {
       if (alreadyInContacts) {
-        toast.error(`${newContact.name.toUpperCase()} is already in contacts.`);
+        toast.error(`${data.name.toUpperCase()} is already in contacts.`);
       } else {
-        await addContact(newContact);
-        toast.success(`${newContact.name.toUpperCase()} is added to contacts.`);
+        await addContact(data);
+        toast.success(`${data.name.toUpperCase()} is added to contacts.`);
       }
     } catch (error) {
       console.log(error);
     }
 
-    resetState();
-  }
+    reset();
+  };
 
   return (
-    <form className={styles.Form} autoComplete="off" onSubmit={handleSubmit}>
+    <form
+      className={styles.Form}
+      autoComplete="off"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <label className={styles.Label}>
         <input
           className={styles.Input}
+          {...register('name')}
           type="text"
-          name="name"
           placeholder="name"
-          value={name}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          onChange={handleInputChange}
         />
+        {errors.name && (
+          <p className={styles.ErrorMessage}>{errors.name.message}</p>
+        )}
       </label>
 
       <label className={styles.Label}>
         <input
           className={styles.Input}
+          {...register('number')}
           type="tel"
-          name="number"
           placeholder="number"
-          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          onChange={handleInputChange}
         />
+        {errors.number && (
+          <p className={styles.ErrorMessage}>{errors.number.message}</p>
+        )}
       </label>
+
       <button type="submit" className={styles.SubmitBtn}>
         Add contact
       </button>

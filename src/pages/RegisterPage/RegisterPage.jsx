@@ -53,7 +53,7 @@ export function RegisterPage() {
               placeholder="name"
             />
             {errors.name && (
-              <p className={styles.ErrorMessage}>{errors.name.message}</p>
+              <p className={formStyles.ErrorMessage}>{errors.name.message}</p>
             )}
           </label>
 
@@ -65,7 +65,7 @@ export function RegisterPage() {
               placeholder="email"
             />
             {errors.email && (
-              <p className={styles.ErrorMessage}>{errors.email.message}</p>
+              <p className={formStyles.ErrorMessage}>{errors.email.message}</p>
             )}
           </label>
 
@@ -77,7 +77,9 @@ export function RegisterPage() {
               placeholder="password"
             />
             {errors.password && (
-              <p className={styles.ErrorMessage}>{errors.password.message}</p>
+              <p className={formStyles.ErrorMessage}>
+                {errors.password.message}
+              </p>
             )}
           </label>
 

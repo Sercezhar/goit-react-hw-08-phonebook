@@ -66,6 +66,16 @@
   background-color: #d9a814;
 }
 
+.ErrorMessage {
+  margin-top: 8px;
+  color: var(--error-message-color);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+}
+
 @media screen and (max-width: 480px) {
   .Input {
     width: 250px;

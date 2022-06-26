@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import { SectionsWrapper } from 'components/SectionsWrapper';
 import { Section } from 'components/Section';
 import { useForm } from 'react-hook-form';
@@ -5,9 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { logInUser } from 'redux/auth/authOperations';
 import formStyles from 'components/ContactForm/ContactForm.module.css';
-import styles from './LoginPage.module.css';
-
-import { useDispatch } from 'react-redux';
 
 const registerSchema = yup.object().shape({
   email: yup.string().email().required('Enter your email to log in'),
@@ -52,7 +50,7 @@ export function LoginPage() {
               placeholder="email"
             />
             {errors.email && (
-              <p className={styles.ErrorMessage}>{errors.email.message}</p>
+              <p className={formStyles.ErrorMessage}>{errors.email.message}</p>
             )}
           </label>
 
@@ -64,7 +62,9 @@ export function LoginPage() {
               placeholder="password"
             />
             {errors.password && (
-              <p className={styles.ErrorMessage}>{errors.password.message}</p>
+              <p className={formStyles.ErrorMessage}>
+                {errors.password.message}
+              </p>
             )}
           </label>
 
