@@ -30,11 +30,7 @@ export function App() {
       <>
         <AppBar />
 
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          theme={'colored'}
-        />
+        <ToastContainer position="top-center" autoClose={3000} />
 
         <Container>
           <Suspense fallback={<OvalLoader />}>
