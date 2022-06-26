@@ -1,12 +1,18 @@
-.container {
-  min-height: calc(100vh - 100px);
+.Container {
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.title {
-  font-weight: 500;
-  font-size: 48px;
+.Title {
+  color: #3e3e3e;
+  font-size: 54px;
   text-align: center;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
 }
