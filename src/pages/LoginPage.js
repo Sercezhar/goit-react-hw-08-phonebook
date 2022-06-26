@@ -6,13 +6,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { logInUser } from 'redux/auth/authOperations';
 import formStyles from 'components/ContactForm/ContactForm.module.css';
+import inputStyles from 'pages/RegisterPage/RegisterPage.module.css';
 
 const registerSchema = yup.object().shape({
   email: yup.string().email().required('Enter your email to log in'),
   password: yup.string().required('Enter your password to log in').min(8),
 });
 
-export function LoginPage() {
+export default function LoginPage() {
   const dispatch = useDispatch();
 
   const {
@@ -44,7 +45,7 @@ export function LoginPage() {
         >
           <label className={formStyles.Label}>
             <input
-              className={formStyles.Input}
+              className={inputStyles.Input}
               {...register('email')}
               type="email"
               placeholder="email"
@@ -76,5 +77,3 @@ export function LoginPage() {
     </SectionsWrapper>
   );
 }
-
-export default LoginPage;
