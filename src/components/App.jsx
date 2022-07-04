@@ -1,14 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
-import { PrivateRoute } from './PrivateRoute';
-import { PublicRoute } from './PublicRoute';
+import { PrivateRoute, PublicRoute } from './Routes';
 import { useEffect, Suspense, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentUser } from 'redux/auth/authOperations';
 import { AppBar } from './AppBar';
 import { Container } from './Container';
-import { getCurrentUser } from 'redux/auth/authOperations';
+import { EditModalPage } from 'pages/EditModalPage';
 import { OvalLoader } from './Loaders/OvalLoader';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from 'react-hot-toast';
 
 const HomePage = lazy(() => import('pages/HomePage'));
 const PhonebookPage = lazy(() => import('pages/PhonebookPage'));
@@ -30,8 +29,6 @@ export function App() {
       <>
         <AppBar />
 
-        <ToastContainer position="top-center" autoClose={3000} />
-
         <Container>
           <Suspense fallback={<OvalLoader />}>
             <Routes>
@@ -51,7 +48,9 @@ export function App() {
                     <PhonebookPage />
                   </PrivateRoute>
                 }
-              />
+              >
+                <Route path="edit/:contactId" element={<EditModalPage />} />
+              </Route>
 
               <Route
                 path="login"
@@ -72,6 +71,13 @@ export function App() {
               />
             </Routes>
           </Suspense>
+
+          <Toaster
+            toastOptions={{
+              duration: 3000,
+              style: { padding: '16px' },
+            }}
+          />
         </Container>
       </>
     )

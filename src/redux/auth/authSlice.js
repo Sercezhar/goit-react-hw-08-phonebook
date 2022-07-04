@@ -11,11 +11,17 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isFetchingCurrentUser: false,
+  isPasswordVisible: false,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    togglePasswordVisibility(state) {
+      state.isPasswordVisible = !state.isPasswordVisible;
+    },
+  },
   extraReducers: {
     // REGISTER
     [registerUser.fulfilled]: (state, { payload }) => {
@@ -51,3 +57,5 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
+
+export const { togglePasswordVisibility } = authSlice.actions;

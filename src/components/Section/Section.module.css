@@ -4,7 +4,7 @@ section {
   align-items: center;
 }
 
-section:not(:last-child) {
+section:not(:last-of-type) {
   margin-bottom: 30px;
 }
 

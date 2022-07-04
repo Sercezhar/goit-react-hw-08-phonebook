@@ -1,0 +1,71 @@
+.Backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.Modal {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  padding: 40px;
+  width: 400px;
+  background-color: var(--container-bg-color);
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.CloseBtn {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.CloseBtn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--theme-color);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.CloseBtn::before {
+  content: 'Close';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  width: fit-content;
+  height: fit-content;
+  transform: translate(-50%, -100%);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  background-color: var(--theme-color);
+  box-shadow: 0px 1px 3px rgb(0 0 0 / 12%);
+  border-radius: 5px;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.CloseBtn:hover::before {
+  opacity: 1;
+}
+
+.CloseBtn:hover svg {
+  fill: var(--theme-color-hover);
+}

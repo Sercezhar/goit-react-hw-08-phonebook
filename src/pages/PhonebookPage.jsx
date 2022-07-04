@@ -1,23 +1,41 @@
+import { Outlet } from 'react-router-dom';
+import { useContacts } from 'hooks/useContacts';
 import { SectionsWrapper } from 'components/SectionsWrapper';
 import { Section } from 'components/Section';
-import { useContacts } from 'hooks/useContacts';
 import { ContactForm } from 'components/ContactForm';
 import { ContactList } from 'components/ContactList';
 import { Filter } from 'components/Filter';
 import { Oval } from 'react-loader-spinner';
 import { OvalLoader } from 'components/Loaders/OvalLoader';
 import { Notification } from 'components/Notification';
+import toast from 'react-hot-toast';
 
 export default function PhonebookPage() {
-  const { contacts, status } = useContacts();
+  const { contacts, status, addContact } = useContacts();
+
+  const handleAddContact = async data => {
+    const alreadyInContacts = contacts.some(
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
+    );
+
+    try {
+      if (alreadyInContacts) {
+        toast.error(`${data.name.toUpperCase()} is already in contacts.`);
+      } else {
+        await addContact(data);
+        toast.success(`${data.name.toUpperCase()} is added to contacts.`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SectionsWrapper>
-      {(status === 'deleteLoading' || status === 'addLoading') && (
-        <OvalLoader />
-      )}
+      {status === 'updating' && <OvalLoader />}
 
       <Section tag={'h1'} title={'Phonebook'}>
-        <ContactForm />
+        <ContactForm onSubmit={handleAddContact} btnText={'Add contact'} />
       </Section>
 
       <Section tag={'h2'} title={'Contacts'}>
@@ -43,6 +61,8 @@ export default function PhonebookPage() {
           )}
         </>
       </Section>
+
+      <Outlet />
     </SectionsWrapper>
   );
 }

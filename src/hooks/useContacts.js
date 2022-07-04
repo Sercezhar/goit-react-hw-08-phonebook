@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact, deleteContact } from 'redux/contacts/contactsOperations';
+import {
+  addContact,
+  deleteContact,
+  editContact,
+} from 'redux/contacts/contactsOperations';
 import { setFilter } from '../redux/contacts/contactsSlice';
 
 export function useContacts() {
@@ -10,6 +14,8 @@ export function useContacts() {
 
   const handleAddContact = newContact => dispatch(addContact(newContact));
   const handleDeleteContact = id => dispatch(deleteContact(id));
+  const handleEditContact = (id, name, number) =>
+    dispatch(editContact(id, name, number));
   const handleSetFilter = value => dispatch(setFilter(value));
 
   return {
@@ -19,6 +25,7 @@ export function useContacts() {
     status,
     addContact: handleAddContact,
     deleteContact: handleDeleteContact,
+    editContact: handleEditContact,
     setFilter: handleSetFilter,
   };
 }

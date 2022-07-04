@@ -1,13 +1,13 @@
-import { SectionsWrapper } from 'components/SectionsWrapper';
-import { Section } from 'components/Section';
 import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser } from 'redux/auth/authOperations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { registerUser } from 'redux/auth/authOperations';
+import { SectionsWrapper } from 'components/SectionsWrapper';
+import { Section } from 'components/Section';
+import { ShowPasswordBtn } from 'components/ShowPasswordBtn';
 import formStyles from 'components/ContactForm/ContactForm.module.css';
 import styles from './RegisterPage.module.css';
-
-import { useDispatch } from 'react-redux';
 
 const registerSchema = yup.object().shape({
   name: yup.string().required().max(16),
@@ -17,6 +17,8 @@ const registerSchema = yup.object().shape({
 
 export function RegisterPage() {
   const dispatch = useDispatch();
+
+  const isPasswordVisible = useSelector(state => state.auth.isPasswordVisible);
 
   const {
     register,
@@ -59,7 +61,7 @@ export function RegisterPage() {
 
           <label className={styles.Label}>
             <input
-              className={styles.Input}
+              className={formStyles.Input}
               {...register('email')}
               type="email"
               placeholder="email"
@@ -71,9 +73,9 @@ export function RegisterPage() {
 
           <label className={styles.Label}>
             <input
-              className={formStyles.Input}
+              className={styles.Input}
               {...register('password')}
-              type="password"
+              type={isPasswordVisible ? 'text' : 'password'}
               placeholder="password"
             />
             {errors.password && (
@@ -81,6 +83,8 @@ export function RegisterPage() {
                 {errors.password.message}
               </p>
             )}
+
+            <ShowPasswordBtn />
           </label>
 
           <button className={formStyles.SubmitBtn} type="submit">

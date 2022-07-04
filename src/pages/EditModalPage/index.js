@@ -1,0 +1,1 @@
+export { EditModalPage } from './EditModalPage';

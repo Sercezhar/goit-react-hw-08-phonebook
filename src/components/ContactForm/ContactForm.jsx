@@ -1,8 +1,7 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useContacts } from 'hooks/useContacts';
-import { toast } from 'react-toastify';
 import styles from './ContactForm.module.css';
 
 const registerSchema = yup.object().shape({
@@ -10,35 +9,27 @@ const registerSchema = yup.object().shape({
   number: yup.string().required().min(8).max(16),
 });
 
-export function ContactForm() {
-  const { contacts, addContact } = useContacts();
+export function ContactForm({
+  initialValues = { name: '', number: '' },
+  onSubmit,
+  btnText,
+}) {
   const {
     register,
     handleSubmit,
     reset,
+    formState,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(registerSchema),
+    defaultValues: initialValues,
   });
 
-  const onSubmit = async data => {
-    const alreadyInContacts = contacts.some(
-      contact => contact.name.toLowerCase() === data.name.toLowerCase()
-    );
-
-    try {
-      if (alreadyInContacts) {
-        toast.error(`${data.name.toUpperCase()} is already in contacts.`);
-      } else {
-        await addContact(data);
-        toast.success(`${data.name.toUpperCase()} is added to contacts.`);
-      }
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
     }
-
-    reset();
-  };
+  }, [formState, reset]);
 
   return (
     <form
@@ -75,7 +66,7 @@ export function ContactForm() {
       </label>
 
       <button type="submit" className={styles.SubmitBtn}>
-        Add contact
+        {btnText}
       </button>
     </form>
   );

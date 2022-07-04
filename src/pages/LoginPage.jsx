@@ -1,10 +1,11 @@
-import { useDispatch } from 'react-redux';
-import { SectionsWrapper } from 'components/SectionsWrapper';
-import { Section } from 'components/Section';
+import { useSelector, useDispatch } from 'react-redux';
+import { logInUser } from 'redux/auth/authOperations';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { logInUser } from 'redux/auth/authOperations';
+import { SectionsWrapper } from 'components/SectionsWrapper';
+import { Section } from 'components/Section';
+import { ShowPasswordBtn } from 'components/ShowPasswordBtn';
 import formStyles from 'components/ContactForm/ContactForm.module.css';
 import inputStyles from 'pages/RegisterPage/RegisterPage.module.css';
 
@@ -15,6 +16,8 @@ const registerSchema = yup.object().shape({
 
 export default function LoginPage() {
   const dispatch = useDispatch();
+
+  const isPasswordVisible = useSelector(state => state.auth.isPasswordVisible);
 
   const {
     register,
@@ -45,7 +48,7 @@ export default function LoginPage() {
         >
           <label className={formStyles.Label}>
             <input
-              className={inputStyles.Input}
+              className={formStyles.Input}
               {...register('email')}
               type="email"
               placeholder="email"
@@ -57,9 +60,9 @@ export default function LoginPage() {
 
           <label className={formStyles.Label}>
             <input
-              className={formStyles.Input}
+              className={inputStyles.Input}
               {...register('password')}
-              type="password"
+              type={isPasswordVisible ? 'text' : 'password'}
               placeholder="password"
             />
             {errors.password && (
@@ -67,6 +70,8 @@ export default function LoginPage() {
                 {errors.password.message}
               </p>
             )}
+
+            <ShowPasswordBtn />
           </label>
 
           <button className={formStyles.SubmitBtn} type="submit">

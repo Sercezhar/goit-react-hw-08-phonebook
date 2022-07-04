@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getContacts, addContact, deleteContact } from './contactsOperations';
+import {
+  getContacts,
+  addContact,
+  deleteContact,
+  editContact,
+} from './contactsOperations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -30,28 +35,43 @@ const contactsSlice = createSlice({
     },
     // ADD
     [addContact.pending]: state => {
-      state.status = 'addLoading';
+      state.status = 'updating';
       state.error = null;
     },
     [addContact.fulfilled]: (state, { payload }) => {
-      state.status = 'addResolved';
+      state.status = 'resolved';
       state.entities.push(payload);
     },
     [addContact.rejected]: (state, { payload }) => {
-      state.status = 'addRejected';
+      state.status = 'rejected';
       state.error = payload;
     },
     // DELETE
     [deleteContact.pending]: state => {
-      state.status = 'deleteLoading';
+      state.status = 'updating';
       state.error = null;
     },
     [deleteContact.fulfilled]: (state, { payload }) => {
-      state.status = 'deleteResolved';
+      state.status = 'resolved';
       state.entities = state.entities.filter(item => item.id !== payload);
     },
     [deleteContact.rejected]: (state, { payload }) => {
-      state.status = 'deleteRejected';
+      state.status = 'rejected';
+      state.error = payload;
+    },
+    // EDIT
+    [editContact.pending]: state => {
+      state.status = 'updating';
+      state.error = null;
+    },
+    [editContact.fulfilled]: (state, { payload }) => {
+      state.status = 'resolved';
+      state.entities = state.entities.map(contact =>
+        contact.id === payload.id ? payload : contact
+      );
+    },
+    [editContact.rejected]: (state, { payload }) => {
+      state.status = 'rejected';
       state.error = payload;
     },
   },
